@@ -3,7 +3,7 @@ import './Cart.css';
 import { StoreContext } from '../../context/StoreContext';
 import { useNavigate } from 'react-router-dom';
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart, getTotalCartAmount } =
+  const { cartItems, product_list, removeFromCart, getTotalCartAmount, url } =
     useContext(StoreContext);
 
   const navigate = useNavigate();
@@ -21,16 +21,16 @@ const Cart = () => {
         </div>
         <br />
         <hr />
-        {food_list.map((item, index) => {
+        {product_list.map((item, index) => {
           if (cartItems[item._id] > 0) {
             return (
               <div>
                 <div className="cart-items-title cart-items-item">
-                  <img src={item.image} alt="" />
+                  <img src={url + '/images/' + item.image} alt="" />
                   <p>{item.name}</p>
-                  <p>₦{item.price * 100}</p>
+                  <p>₦{item.price}</p>
                   <p>{cartItems[item._id]}</p>
-                  <p>₦{item.price * 100 * cartItems[item._id]}</p>
+                  <p>₦{item.price * cartItems[item._id]}</p>
                   <p onClick={() => removeFromCart(item._id)} className="cross">
                     x
                   </p>
@@ -48,7 +48,7 @@ const Cart = () => {
             <div className="cart-total-details">
               <p>Subtotal</p>
 
-              <p>₦{getTotalCartAmount() * 100}</p>
+              <p>₦{getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
@@ -58,11 +58,9 @@ const Cart = () => {
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              {/* checked if the total amount is greater that 1 then i wnat to add the delivery fee */}
+              {/* checked if the total amount is greater that 1 then i want to add the delivery fee */}
               <b>
-                ₦
-                {getTotalCartAmount() * 100 +
-                  (getTotalCartAmount() > 0 ? 200 : 0)}
+                ₦{getTotalCartAmount() + (getTotalCartAmount() > 0 ? 200 : 0)}
               </b>
             </div>
           </div>

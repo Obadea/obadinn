@@ -4,12 +4,17 @@ import { assets } from '../../assets/assets';
 import { StoreContext } from '../../context/StoreContext';
 
 const FoodItem = ({ id, name, price, desctiption, image }) => {
-  const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
+  const { cartItems, addToCart, removeFromCart, url } =
+    useContext(StoreContext);
 
   return (
     <div className="food-item">
       <div className="food-item-image-container">
-        <img className="food-item-image" src={image} alt="" />
+        <img
+          className="food-item-image"
+          src={url + '/images/' + image}
+          alt=""
+        />
         {!cartItems[id] ? (
           <img
             className="add"
@@ -34,7 +39,7 @@ const FoodItem = ({ id, name, price, desctiption, image }) => {
           <img src={assets.rating_starts} alt="" />
         </div>
         <p className="food-item-desc">{desctiption}</p>
-        <p className="food-item-price">₦ {price * 100}</p>
+        <p className="food-item-price">₦ {price}</p>
       </div>
     </div>
   );
